@@ -9,5 +9,8 @@ install:
 	uv sync
 
 brain-games:
-	brain-games
+	brain-
+	
+make lint:
+    uv run ruff check brain_games
 	

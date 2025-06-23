@@ -3,9 +3,9 @@ from random import randint
 import prompt
 
 def random_number(): 
-  return randint(0, 100)
+  return randint(1, 100)
 
-name = welcome_user()
+
 
 def first_question(name): 
     for i in range(1, 4):  # Repite 3 veces
@@ -13,6 +13,7 @@ def first_question(name):
         is_even = number % 2 == 0 # aqui se si es par o impar el divisible
         VALID_ANSWER = ['yes', 'no']
         correct_answer = 'yes' if is_even else 'no'
+        name = welcome_user()
         print('Answer "yes" if the number is even, otherwise answer "no".')
         question = prompt.string(f'Question: {number}')
 

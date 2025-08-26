@@ -1,36 +1,46 @@
-package-install:
-    uv tool install dist/*.whl
+.PHONY: install build package-install test lint format brain-games brain-even brain-calc brain-gcd brain-progression brain-prime clean
+
+install:
+    @pip install -e .
 
 build:
-    uv pip compile -o requirements.txt pyproject.toml
-    uv pip sync requirements.txt
-    
-install:
-    uv sync
+    @python -m build
+
+package-install:
+    @pip install dist/*.whl
+
+test:
+    @pytest tests/
+
+lint:
+    @ruff check brain_games
+
+format:
+    @black brain_games/
+    @isort brain_games/
 
 brain-games:
-    brain-games
+    @python -m brain_games.scripts.brain_games
 
 brain-even:
-	brain-even
+    @python -m brain_games.scripts.brain_even
 
 brain-calc:
-	brain-calc
+    @python -m brain_games.scripts.brain_calc
 
-brain-gdc:
-	brain-gcd
+brain-gcd:
+    @python -m brain_games.scripts.brain_gcd
 
 brain-progression:
-	brain-progression
+    @python -m brain_games.scripts.brain_progression
 
 brain-prime:
-	brain-prime
-	
-    
-make lint:
-    uv run ruff check brain_games
+    @python -m brain_games.scripts.brain_prime
 
 clean:
-    rm -f dist/*.whl
-    rm -f ~/.local/bin/brain-even
-    rm -f requirements.txt
+    @rm -rf build/ dist/ .egg-info
+    @rm -f .coverage .pytest_cache/
+    @find . -type d -name '__pycache__' -exec rm -rf {} +
+    @find . -type f -name '*.pyc' -delete
+    @find . -type f -name '*.pyo' -delete
+    @find . -type f -name '*~' -delete
